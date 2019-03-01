@@ -18,14 +18,14 @@ typedef struct
 class stock
 {
   protected:
-   static vector<item> list;
+   static vector<item> lists;
 
   public:
     stock()
     {
         ifstream infile("./stock.clx");
         string line;
-	//list.clear();
+	//lists.clear();
         while (getline(infile, line))
         {
             getline(infile, line);
@@ -44,7 +44,7 @@ class stock
     ~stock()
     {
         ofstream outfile("./stock.clx");
-        for (auto item : list)
+        for (auto item : lists)
         {
             outfile<<"Start_Item<<"<<endl;
             outfile<<item.name<<endl;
@@ -64,7 +64,7 @@ class stock
              << "|" << setw(10) << "Price"
              << "|" << endl;
         cout << "|" << setw(25) << string(25, '_') << "|" << setw(15) << string(15, '_') << "|" << setw(10) << string(10, '_') << "|" << setw(10) << string(10, '_') << "|" << endl;
-        for (auto item : list)
+        for (auto item : lists)
         {
             cout << "|" << left << setw(25) << item.name << "|" << setw(15) << item.id << "|" << right << setw(10) << item.stockqty << "|" << setw(10) << item.price << "|" << endl;
         }
@@ -72,18 +72,18 @@ class stock
     }
     void add_item(string name,string id, float qty, float price)
     {
-        for (auto item : list)
+        for (auto item : lists)
         {
             if (item.name==name || item.id ==id )
             {
                 return;
             }
         }
-        list.push_back({name,id,qty,price});
+        lists.push_back({name,id,qty,price});
     }
     item get_item (string name)
     {
-        for (auto item :list)
+        for (auto item :lists)
         {
             if (item.name==name)
             {
@@ -94,14 +94,14 @@ class stock
     }
   static void update_stock(string iname,float iqty)
     {
-        for (int i =0;i<list.size();i++)
+        for (int i =0;i<lists.size();i++)
 
         {
-            if(list[i].name==iname)
+            if(lists[i].name==iname)
             {
-                 if (list[i].stockqty>=iqty)
+                 if (lists[i].stockqty>=iqty)
                  {
-                    list[i]={list[i].name,list[i].id,list[i].stockqty-iqty,list[i].price};
+                    lists[i]={lists[i].name,lists[i].id,lists[i].stockqty-iqty,lists[i].price};
                     return;
                  }
                  else
@@ -114,7 +114,7 @@ class stock
         throw invalid_argument("no such item known");
     }
 };
-vector <item>stock::list={};
+vector <item>stock::lists={};
 class bill
 {
   protected:
